@@ -7,6 +7,8 @@
 
 In this codealong, we will build a full stack MEN (Mongoose Express Node) application with full CRUD operations and user authentication.  The goal will be to build an app where user's can sign up, sign in, sing out, change their password, and create, read, update, and delete recipes.
 
+You can go [here](https://mongoose-recipes.fly.dev/) and see a deployed version of what we plan to build.
+
 
 ## Getting Started
 
@@ -3465,8 +3467,14 @@ In this lesson, we learned how to set up a Node/Express server from scratch, how
 
 This is a BIG lesson, with lots of opportunities to make a mistake. So I've provided a [solution branch](https://github.com/NobodysLackey/mongoose-recipes/tree/solution) to this repository that you can clone down to see the final version.
 
+You can also view the deployed version [here](https://mongoose-recipes.fly.dev/).
+
 
 ## 📚 Resources
+
+Deployed Version:
+- [mongoose-recipes.fly.dev](https://mongoose-recipes.fly.dev/)
+- [Deploy Your Own!](https://deployit.surge.sh/)
 
 Documentation:
 - [Node Docs](https://nodejs.org/docs/latest/api/)
