@@ -910,7 +910,7 @@ const hashedPassword = bcrypt.hashSync(req.body.password, 12)
 Now, creating the user:
 
 ```js
-const user = await User.create({
+await User.create({
   email: req.body.email,
   password: hashedPassword,
   first: req.body.first,
@@ -923,7 +923,7 @@ const user = await User.create({
 Finally, sending a response:
 
 ```js
-res.send(`Thanks for signing up, ${user.first}!`)
+res.send(`Thanks for signing up!`)
 // This will be an EJS page later...
 ```
 
@@ -965,7 +965,7 @@ const registerUser = async (req, res) => {
       // This will be also be an EJS page...
     }
     const hashedPassword = bcrypt.hashSync(req.body.password, 12)
-    const user = await User.create({
+    await User.create({
       email: req.body.email,
       password: hashedPassword,
       first: req.body.first,
@@ -973,7 +973,7 @@ const registerUser = async (req, res) => {
       picture: req.body.picture,
       recipes: []
     })
-    res.send(`Thanks for signing up, ${user.first}!`)
+    res.send(`Thanks for signing up!`)
     // This will be an EJS page later...
   } catch (error) {
     console.error('An error has occurred registering a user!', error.message)
@@ -1486,6 +1486,7 @@ Now, to create a *new* object that only contains the data we want to send to the
 
 ```js
 const data = {
+  _id: user._id,
   first: user.first,
   last: user.last,
   picture: user.picture,
@@ -1530,6 +1531,7 @@ const getUserById = async (req, res) => {
     const user = await User.findById(req.params.id)
     // Returns the full user object, including their hashed password. Never send this to anyone other than the user it belongs to.
     const data = {
+      _id: user._id,
       first: user.first,
       last: user.last,
       picture: user.picture,
@@ -2753,16 +2755,21 @@ In the following sections, you can copy/paste the EJS from these snippets to the
   <body>
     <nav>
       <a href="/">Home</a>
-      <a href="/recipes">All Recipes</a>
 
       <% if (!user) { %>
+
       <a href="/auth/sign-up">Sign Up</a>
       <a href="/auth/sign-in">Sign In</a>
+
       <% } else { %>
+
+      <a href="/recipes">All Recipes</a>
       <a href="/recipes/new">New Recipe</a>
       <a href="/users/<%= user._id %>">My Profile</a>
       <a href="/auth/sign-out">Sign Out</a>
+
       <% } %>
+
     </nav>
     <main>
 ```
@@ -2888,9 +2895,12 @@ touch ./views/auth/thanks.ejs
 ```html
 <%- include('../partials/header.ejs') %>
 
-<h2>Thanks for signing up, <%= user.first %>!</h2>
+<h2>Thanks for signing up!</h2>
+
+<h2>Sign in <a href="/auth/sign-in">here</a>.</h2>
 
 <%- include('../partials/footer.ejs') %>
+
 ```
 
 </details>
@@ -2902,7 +2912,7 @@ In `authController.js`, we'll render this EJS page after the user registers.
 In `registerUser`, replace our `res.send` with this:
 
 ```js
-res.render('./auth/thanks.ejs', { user })
+res.render('./auth/thanks.ejs')
 ```
 
 [📖 Back to Top](#-table-of-contents)
@@ -2965,50 +2975,6 @@ This won't work yet, but we'll set it up soon.
 ---
 
 
-### Update Password Page
-
-This page allows the user to update their password.
-
-```sh
-touch ./views/auth/update-password.ejs
-```
-
-<br>
-
-<details>
-<summary>💡 <b>update-password.ejs</b></summary>
-
-```html
-<%- include('../partials/header.ejs') %>
-
-<h2>Update Password</h2>
-<form action="/auth/<%= user._id %>?_method=PUT" method="POST">
-  <input type="password" name="oldPassword" placeholder="Old Password" required />
-  <input type="password" name="newPassword" placeholder="New Password" required />
-  <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
-  <button type="submit">Update</button>
-</form>
-
-<%- include('../partials/footer.ejs') %>
-```
-
-</details>
-
-<br>
-
-In `authRouter.js`, render the route using our session object to grab the user info:
-
-```js
-router.get('/:id/update-password', (req, res) => {
-  res.render('./auth/update-password.ejs')
-})
-```
-
-[📖 Back to Top](#-table-of-contents)
-
----
-
-
 ### User Profile Page
 
 This page displays a user's profile info and their recipes.
@@ -3064,6 +3030,50 @@ Then, replace the `res.send` with the following:
 
 ```js
 res.render('./users/profile.ejs', { user })
+```
+
+[📖 Back to Top](#-table-of-contents)
+
+---
+
+
+### Update Password Page
+
+This page allows the user to update their password.
+
+```sh
+touch ./views/auth/update-password.ejs
+```
+
+<br>
+
+<details>
+<summary>💡 <b>update-password.ejs</b></summary>
+
+```html
+<%- include('../partials/header.ejs') %>
+
+<h2>Update Password</h2>
+<form action="/auth/<%= user._id %>?_method=PUT" method="POST">
+  <input type="password" name="oldPassword" placeholder="Old Password" required />
+  <input type="password" name="newPassword" placeholder="New Password" required />
+  <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
+  <button type="submit">Update</button>
+</form>
+
+<%- include('../partials/footer.ejs') %>
+```
+
+</details>
+
+<br>
+
+In `authRouter.js`, render the route using our session object to grab the user info:
+
+```js
+router.get('/:id/update-password', (req, res) => {
+  res.render('./auth/update-password.ejs')
+})
 ```
 
 [📖 Back to Top](#-table-of-contents)
@@ -3164,15 +3174,25 @@ touch ./views/recipes/show.ejs
 ```html
 <%- include('../partials/header.ejs') %>
 
+<% console.log(recipe.author._id) %>
+
+<% console.log(user._id) %>
+
 <h2><%= recipe.title %></h2>
 <img src="<%= recipe.image %>" alt="<%= recipe.title %>" width="300" />
 <p><%= recipe.description %></p>
 
-<a href="/recipes/<%= recipe._id %>/edit">Edit</a>
+<% if (user._id === recipe.author._id.toString()) { %>
+  
+<form action="/recipes/<%= recipe._id %>/edit">
+  <button>Edit</button>
+</form>
 
 <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
   <button type="submit">Delete</button>
 </form>
+
+<% } %>
 
 <%- include('../partials/footer.ejs') %>
 ```
@@ -3184,8 +3204,10 @@ touch ./views/recipes/show.ejs
 In `recipeController.js`, update the `res.send` in `getRecipeById` with:
 
 ```js
-res.render('./recipes/show.ejs', { recipe })
+res.render('./recipes/show.ejs', { user: req.session.user, recipe })
 ```
+
+We've got a conditional statement in the show page that ensures only the user who made the recipe can edit or delete it. In order for that to work, we have to pass the `session` object to compare the `_id` fields.
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -3404,7 +3426,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px 20px;
+  padding: 40px 400px 20px;
   box-sizing: border-box;
 }
 
@@ -3426,18 +3448,27 @@ form {
   max-width: 500px;
   width: 100%;
   text-align: left;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 form input,
 form textarea,
 form button {
   display: block;
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin: 10px 0;
   font-family: inherit;
   border: 1px solid #bca98e;
   border-radius: 4px;
+}
+
+form textarea {
+  height: 150px;
 }
 
 button {
