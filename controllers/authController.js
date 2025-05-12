@@ -68,6 +68,14 @@ const updatePassword = async (req, res) => {
       return res.send('No user with that ID exists!')
       // This will be an EJS page later...
     }
+    const validPassword = bcrypt.compareSync(
+      req.body.oldPassword,
+      user.password
+    )
+    if (!validPassword) {
+      return res.send('Your old password was not correct! Please try again.')
+      // This will be also be an EJS page...
+    }
     if (req.body.newPassword !== req.body.confirmPassword) {
       return res.send('Password and Confirm Password must match')
       // This will be also be an EJS page...
@@ -76,7 +84,8 @@ const updatePassword = async (req, res) => {
     user.password = hashedPassword
     // It's critical that this field is updated with the password we hashed with bcrypt, and never the plain text password in req.body.password
     await user.save()
-    res.render('./auth/confirm.ejs', { user })
+    res.send(`Your password has been updated, ${user.first}!`)
+    // This will be an EJS page later...
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",

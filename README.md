@@ -1667,6 +1667,19 @@ if (!user) {
 }
 ```
 
+Next, we need to confirm they know their current password, especially before changing to a new one. This is similar to signing in, but we *don't* need to reset the `session` object since they're already signed in:
+
+```js
+const validPassword = bcrypt.compareSync(
+  req.body.oldPassword,
+  user.password
+)
+if (!validPassword) {
+  return res.send('Your old password was not correct! Please try again.')
+  // This will be also be an EJS page...
+}
+```
+
 Now, to check the user's new password:
 
 ```js
@@ -1729,6 +1742,14 @@ const updatePassword = async (req, res) => {
       return res.send('No user with that ID exists!')
       // This will be an EJS page later...
     }
+    const validPassword = bcrypt.compareSync(
+      req.body.oldPassword,
+      user.password
+    )
+    if (!validPassword) {
+      return res.send('Your old password was not correct! Please try again.')
+      // This will be also be an EJS page...
+    }
     if (req.body.newPassword !== req.body.confirmPassword) {
       return res.send('Password and Confirm Password must match')
       // This will be also be an EJS page...
@@ -1741,7 +1762,7 @@ const updatePassword = async (req, res) => {
     // This will be an EJS page later...
   } catch (error) {
     console.error(
-      'An error has occurred updating a user's password!',
+      "An error has occurred updating a user's password!",
       error.message
     )
   }
@@ -1800,7 +1821,7 @@ Now, we test with Insomnia or Postman - a `PUT` request to `'http://localhost:30
 
 ```json
 {
-  "password": "john1234",
+  "oldPassword": "john1234",
   "newPassword": "1234john",
   "confirmPassword": "1234john"
 }
@@ -2963,6 +2984,7 @@ touch ./views/auth/update-password.ejs
 
 <h2>Update Password</h2>
 <form action="/auth/<%= user._id %>?_method=PUT" method="POST">
+  <input type="password" name="oldPassword" placeholder="Old Password" required />
   <input type="password" name="newPassword" placeholder="New Password" required />
   <input type="password" name="confirmPassword" placeholder="Confirm New Password" required />
   <button type="submit">Update</button>
