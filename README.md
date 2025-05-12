@@ -536,7 +536,7 @@ ERD stands for **E**ntity **R**elationship **D**iagram. We use this as a way of 
 
 ![ERD](./images/erd.png)
 
-There are many different tools you can use for creating an ERD. This one was made with [Canva](http://www.canva.com), but you could use anything. I've listed a few options in the [Resources Section](#📚-resources).
+There are many different tools you can use for creating an ERD. This one was made with [Canva](http://www.canva.com), but you could use anything. I've listed a few options in the [Resources Section](#-resources).
 
 Now that we have our plan in place, let's start setting up our model files.
 
