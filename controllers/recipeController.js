@@ -28,8 +28,8 @@ const getAllRecipes = async (req, res) => {
 
 const getRecipeById = async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id)
-    res.render('./recipes/show.ejs', { recipe })
+    const recipe = await Recipe.findById(req.params.id).populate('author')
+    res.render('./recipes/show.ejs', { user: req.session.user, recipe })
   } catch (error) {
     console.error('An error has occurred getting a recipe!', error.message)
   }

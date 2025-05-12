@@ -1,13 +1,24 @@
+
 <%- include('../partials/header.ejs') %>
+
+<% console.log(recipe.author._id) %>
+
+<% console.log(user._id) %>
 
 <h2><%= recipe.title %></h2>
 <img src="<%= recipe.image %>" alt="<%= recipe.title %>" width="300" />
 <p><%= recipe.description %></p>
 
-<a href="/recipes/<%= recipe._id %>/edit">Edit</a>
+<% if (user._id === recipe.author._id.toString()) { %>
+  
+<form action="/recipes/<%= recipe._id %>/edit">
+  <button>Edit</button>
+</form>
 
 <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
   <button type="submit">Delete</button>
 </form>
+
+<% } %>
 
 <%- include('../partials/footer.ejs') %>

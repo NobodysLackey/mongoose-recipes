@@ -1,3 +1,4 @@
+
 const bcrypt = require('bcrypt')
 
 const User = require('../models/User.js')
@@ -14,7 +15,7 @@ const registerUser = async (req, res) => {
       // This will be also be an EJS page...
     }
     const hashedPassword = bcrypt.hashSync(req.body.password, 12)
-    const user = await User.create({
+    await User.create({
       email: req.body.email,
       password: hashedPassword,
       first: req.body.first,
@@ -22,7 +23,7 @@ const registerUser = async (req, res) => {
       picture: req.body.picture,
       recipes: []
     })
-    res.render('./auth/thanks.ejs', { user })
+    res.render('./auth/thanks.ejs')
   } catch (error) {
     console.error('An error has occurred registering a user!', error.message)
   }
@@ -84,8 +85,7 @@ const updatePassword = async (req, res) => {
     user.password = hashedPassword
     // It's critical that this field is updated with the password we hashed with bcrypt, and never the plain text password in req.body.password
     await user.save()
-    res.send(`Your password has been updated, ${user.first}!`)
-    // This will be an EJS page later...
+    res.render('./auth/confirm.ejs', { user })
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",
