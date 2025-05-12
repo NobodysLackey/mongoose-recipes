@@ -3496,7 +3496,7 @@ You can also view the deployed version [here](https://mongoose-recipes.fly.dev/)
 
 Deployed Version:
 - [mongoose-recipes.fly.dev](https://mongoose-recipes.fly.dev/)
-- [Deploy Your Own!](https://deployit.surge.sh/)
+- [Deploy Your Own!](https://expressdeployment.fly.dev/)
 
 Documentation:
 - [Node Docs](https://nodejs.org/docs/latest/api/)
