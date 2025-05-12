@@ -337,9 +337,9 @@ Leave the `.env` file empty for now.
 
 ### Getting Our Connection String
 
-We need to allow our server to access our database on MongoDB Atlas. To do this, we will always need our secure connection string. 
+We need to allow our server to access our database on [MongoDB Atlas](https://www.mongodb.com/atlas). To do this, we will always need our secure connection string. 
 
-To access this, sing in to Atlas.
+To access this, [sign in](https://account.mongodb.com/account/login) to Atlas.
 
 Once you arrive on the Overview page, click the Connect button as shown below:
 
@@ -3529,6 +3529,7 @@ Deployed Version:
 - [Deploy Your Own!](https://expressdeployment.fly.dev/)
 
 Documentation:
+- [MongoDB Atlas](https://www.mongodb.com/atlas)
 - [Node Docs](https://nodejs.org/docs/latest/api/)
 - [Express Docs](https://expressjs.com/)
 - [Mongoose Docs](https://mongoosejs.com/docs/guide.html)
