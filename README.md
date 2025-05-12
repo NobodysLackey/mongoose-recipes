@@ -358,7 +358,7 @@ Click the copy button to add the connection string to your clipboard. You do not
 ---
 
 
-### Setting Up the **.env** File
+### Setting Up the .env File
 
 We will take this string and paste it into our `.env` file under the variable name `MONGODB_URI`. Like this:
 
@@ -1046,13 +1046,12 @@ Now, we test with Insomnia or Postman - a `POST` request to `'http://localhost:3
 
 ```json
 {
-  "first": "John",
-  "last": "Doe",
-  "email": "john.doe@email.com",
-  "password": "john1234",
-  "confirmPassword": "john1234",
-  "picture": "https://imgur.com/a/1VRyfxY"
-
+  "first": "Michael",
+  "last": "Lackey",
+  "email": "michael@email.com",
+  "password": "1234",
+  "confirmPassword": "1234",
+  "picture": "https://i.imgur.com/GS4i9HG.png"
 }
 ```
 
@@ -1241,8 +1240,8 @@ Now, we test with Insomnia or Postman - a `POST` request to `'http://localhost:3
 
 ```json
 {
-  "email": "john.doe@email.com",
-  "password": "john1234"
+  "email": "michael@email.com",
+  "password": "1234"
 }
 ```
 
@@ -1821,9 +1820,9 @@ Now, we test with Insomnia or Postman - a `PUT` request to `'http://localhost:30
 
 ```json
 {
-  "oldPassword": "john1234",
-  "newPassword": "1234john",
-  "confirmPassword": "1234john"
+  "oldPassword": "1234",
+  "newPassword": "4321",
+  "confirmPassword": "4321"
 }
 ```
 
@@ -2065,8 +2064,8 @@ Now, we test with Insomnia or Postman - a `POST` request to `'http://localhost:3
 {
   "title": "Chicken Parmigiana",
   "description": "Chicken Parmigiana is a beloved Italian-American dish made from breaded chicken cutlets topped with marinara sauce and melted mozzarella and Parmesan cheese. It's typically served over a bed of spaghetti or with a side of garlic bread, delivering a savory, crispy, and comforting bite every time.",
-  "image": "https://imgur.com/a/LS4Ta2q",
-  "author": "681cae44b173570be8f4bfd3"
+  "image": "https://i.imgur.com/LPzYS9q.png",
+  "author": "682197313293e5ff1069431e"
 }
 ```
 
@@ -2510,13 +2509,13 @@ Now, we test with Insomnia or Postman - a `PUT` request to `'http://localhost:30
 
 ```json
 {
-  "title": "Mom's Famous Chicken Parmigiana"
+  "title": "Patch's Famous Chicken Parmigiana"
 }
 ```
 
 ![Update Recipe Response](./images/update-recipe-response.png)
 
-What's for dinner? Mom's Famous Pattern.
+What's for dinner? Patch's Famous Pattern.
 
 [📖 Back to Top](#-table-of-contents)
 
