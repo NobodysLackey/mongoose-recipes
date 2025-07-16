@@ -96,6 +96,8 @@ Next, you'll need to make sure that things like your `node_modules` folder do no
 touch .gitignore
 ```
 
+This file should reside in the root of your project - same level as your `package.json`. 
+
 Anything you put in this file will not be tracked by git.
 
 For now, put:
@@ -105,7 +107,7 @@ For now, put:
 package-lock.json
 ```
 
-***ALWAYS put `/node_modules` in your gitignore. It is bad practice to push up these files. Putting your `package-lock.json` is an optional step sine it contains install information for your specific operating system.***
+***ALWAYS put `/node_modules` in your gitignore. It is bad practice to push up these files. Putting your `package-lock.json` is an optional step since it contains install information for your specific operating system.***
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -114,43 +116,43 @@ package-lock.json
 
 ## Setting Up Your Express Server
 
-You need a file to set up your Express server. By convention, you'll create a `server.js` file in the root of your repository.
+You need a file to set up your Express server in. By convention, you'll create a `server.js` file in the root of your repository.
 
 ```sh
 touch server.js
 ```
 
-In this file, you'll import the Express library.
+In this file, you'll require the Express library.
 
 ```js
 const express = require('express')
 ```
 
-You also will want to import and set up Morgan for logging.
+You also will want to require and set up Morgan for logging.
 
 ```js
 const logger = require('morgan')
 ```
 
-Next, you'll import Method Override. You'll need this later when you set up your forms.
+Next, you'll require Method Override. You'll need this later when you set up your forms.
 
 ```js
 const methodOverride = require('method-override')
 ```
 
-Because this app will have authentication, you will also need to set up Express Session.
+This app will have authentication, so you will also need to set up Express Session.
 
 ```js
 const session = require('express-session')
 ```
 
-Bring in `dotenv` so you can access your `.env` file.
+Require `dotenv` and immediately invoke the `.config()` method so you can access your `.env` file.
 
 ```js
 require('dotenv').config()
 ```
 
-Now that you've imported these libraries, you need to put them to use. Below your imports:
+Now that you've required these libraries, you need to put them to use. Below your requires:
 
 ```js
 const app = express()
@@ -192,7 +194,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-Just under your imports, set up your `PORT` variable following real-world best practices...
+Just under your requires, set up your `PORT` variable following real-world best practices...
 
 ```js
 const PORT = process.env.PORT ? process.env.PORT : 3000
@@ -206,9 +208,12 @@ app.listen(PORT, () => {
 })
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
-<details><summary>💡 Your <b>server.js</b> file should look like this so far . . . </summary>
+<details>
+<summary>💡 Your <b>server.js</b> file should look like this so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -244,7 +249,7 @@ app.listen(PORT, () => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -255,11 +260,22 @@ app.listen(PORT, () => {
 
 Now that your basic Express server is set up to run, you need to test it out.
 
-In your `package.json` file, let's add a script to run your server. There are two options for this - `nodemon` or `node --watch`:
+In your `package.json` file, let's add a script to run your server. There are two options for this:
+
+· · · · · · · · · · · · · · · · · · · ·
+
+<details>
+<summary> 🪛 <b>nodemon</b></summary>
 
 <br>
 
-<details><summary><b>nodemon</b></summary>
+The npm package [nodemon](https://www.npmjs.com/package/nodemon) is a dev tool that automatically restarts your server when it detects changes in your files. To use `nodemon`, it's best to install it globally on your system (if you have not already):
+
+```sh
+npm install -g nodemon
+```
+
+Then, add this `start` script to your `package.json`:
 
 ```json
 "scripts": {
@@ -268,11 +284,20 @@ In your `package.json` file, let's add a script to run your server. There are tw
 },
 ```
 
+If you choose to use `nodemon`, you don't even technically have to use this "start" script. You can simply run `nodemon` in your terminal and it will automatically run your server file!
+
 </details>
+
+· · · · · · · · · · · · · · · · · · · ·
+
+<details>
+<summary>🪛 <b>node --watch</b></summary>
 
 <br>
 
-<details><summary><b>node --watch</b></summary>
+`node --watch` is a built-in Node flag (as of version 18) that restarts your app when watched files change — similar to `nodemon`, but without having to install an extra dependency.
+
+To use, just add this `start` script to your `package.json`:
 
 ```json
 "scripts": {
@@ -282,9 +307,9 @@ In your `package.json` file, let's add a script to run your server. There are tw
 ```
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
-Both do the same thing, but `nodemon` requires another library to execute, while `node` already has the functionality built in. Whichever you choose is up to you.
+Whichever you choose is up to you.
 
 After your script is set up, you can run your server. In your terminal:
 
@@ -298,7 +323,7 @@ You should see:
 Running Server on Port 3000 . . . 
 ```
 
-Now let's make a request to `'http://localhost:3000/'` with Insomnia to test your base route.
+Now let's make a request to `'http://localhost:3000/'` with [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/downloads/) to test your base route.
 
 The response you get should be `Your app is connected . . . `. You will eventually replace this with your rendered EJS home page. This is just a test to make sure your server is set up properly.
 
@@ -312,9 +337,6 @@ For now, let's stop your server by pressing <kbd>Ctrl</kbd> + <kbd>C</kbd>.
 ## Connecting Your MongoDB Database
 
 
----
-
-
 ### Environment Variables
 
 First, let's set up a file where you can hide secure information - a `.env` file.
@@ -324,6 +346,8 @@ In terminal:
 ```sh
 touch .env
 ```
+
+This file should reside in the root of your project - same level as your `package.json`.
 
 You definitely don't want to push this file to GitHub, so let's immediately add it to the bottom of your `.gitignore` file.
 
@@ -365,7 +389,7 @@ Skip past steps 1 & 2. On Step 3, click the copy button to add the connection st
 
 ### Setting Up the .env File
 
-You will take this string and paste it into your `.env` file under the variable name `MONGODB_URI`. Like this:
+You will take this string and paste it into your `.env` file under the variable name `MONGODB_URI`, by convention. Like this:
 
 ```txt
 MONGODB_URI=mongodb+srv://<your_username>:<db_password>@<cluster_name>.qscuy.azure.mongodb.net/<database-name>?retryWrites=true&w=majority&appName=cluster_name
@@ -373,14 +397,44 @@ MONGODB_URI=mongodb+srv://<your_username>:<db_password>@<cluster_name>.qscuy.azu
 
 Yours may look completely different than the example above due to the host and region you selected on setup, and that is fine. After pasting your connection string, you need to replace `<db_password>` with *your* database password. Replace the `< >` as well.
 
-A few of the query parameters at the end are not completely necessary and can be removed also.
+There are a few query parameters at the end of the connection string. Each serves a unique purpose. 
+
+· · · · · · · · · · · · · · · · · · · ·
+
+<details>
+<summary> 🪛 A breakdown of each <b>query parameter</b> . . . </summary>
+
+<br>
 
 ```txt
-&w=majority
-&appName=cluster_name
+retryWrites=true
 ```
 
-Now you need to name your new database. In the connection string, right after `mongodb.net/` but before the `?`, write the name of the database you are building.
+This first query parameter tells MongoDB to automatically retry write operations (like insert, update, delete) *once* if they fail due to an error like a dropped connection.
+
+This is recommended to **keep**.
+
+```txt
+w=majority
+```
+
+When MongoDB saves our data, it does so on multiple servers to ensure data is not lost. `w=majority` tells MongoDB not to return a *success code* until a **majority** of these servers have successfully received this data.
+
+This is best to **keep** for production code.
+
+```txt
+appName=cluster_name
+```
+
+This is just a label for your connection in logs/monitoring tools.
+
+You can **keep** it and name it whatever you want or **remove** it.
+
+</details>
+
+· · · · · · · · · · · · · · · · · · · ·
+
+Now, you need to name your new database. In the connection string, right after `mongodb.net/` but before the `?`, write the name of the database you are building.
 
 For this app, you'll say `mongoose-recipes`. 
 
@@ -392,7 +446,7 @@ Next, since you're already in your `.env`, you need to go ahead and set your `SE
 SESSION_SECRET=areallyrandomandlongstring
 ```
 
-This can be any string. Unpredictable and random is best.
+This can be any string. Unpredictable and random is best. It's the fact that only *you* have it that makes it secure.
 
 Save your `.env` file. If you left your server running, you'll need to restart it now. 
 
@@ -419,92 +473,21 @@ touch ./db/index.js
 
 You'll use this file to establish a connection to your database with `mongoose`.
 
-At the top of the file, you'll import `mongoose`.
-
 ```js
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
+
+mongoose.connect(process.env.MONGODB_URI)
+
+mongoose.connection.on("connected", () => {
+  console.log(`Successfully connected to MongoDB database . . .`)
+})
+
+module.exports = mongoose
 ```
 
-You also need to bring in `dotenv` to allow you to extract and utilize your database connection string. You can require it and immediately invoke the `config()` method. No need to store it in a variable.
+In order for this to occur when you run your server, you just need to require this file at the top of your `server.js`. This will run the file, and automatically execute your mongoose connection.
 
-```js
-require('dotenv').config()
-```
-
-Now, let's set up an *asynchronous* function to attempt connection with your database.
-
-```js
-const connect = async () => {
-
-}
-```
-
-In this function, you want to set up a `try/catch` block to properly handle any errors that might occur during connection.
-
-```js
-const connect = async () => {
-  try {
-
-  } catch (error) {
-
-  }
-}
-```
-
-You'll use Mongoose's built in `connect` method to establish your connection and then `console.log` the success. In the catch block, you'll simply `console.error` any errors that occur.
-
-```js
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI)
-    console.log('Successfully connected to MongoDB database . . .')
-  } catch (error) {
-    console.error('Connection Error!', error.message)
-  }
-}
-```
-
-Now, you invoke the function you made:
-
-```js
-connect()
-```
-
-Finally, you simply export the Mongoose connection.
-
-```js
-module.exports = mongoose.connection
-```
-
-<br>
-
-<details><summary>💡 Final <b>Mongoose Connection</b> file . . . </summary>
-
-```js
-const mongoose = require('mongoose')
-require('dotenv').config()
-
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI)
-    console.log('Successfully connected to MongoDB database . . .')
-  } catch (error) {
-    console.error('Connection Error!', error.message)
-  }
-}
-
-connect()
-
-module.exports = mongoose.connection
-```
-
-</details>
-
-<br>
-
-In order for this to occur when you run your server, you just need to require this file at the top of your `server.js`. This will run the file, and execute your `connect()` function.
-
-In `server.js`, just below your other imports...
+In `server.js`, just below your other requires...
 
 ```js
 const db = require('./db')
@@ -566,7 +549,7 @@ In this folder, you'll create a file for the particular resource you want a sche
 touch ./models/User.js
 ```
 
-In this file, you'll need access to the mongoose object, so let's import that.
+In this file, you'll need access to the `mongoose` object, so let's require that.
 
 ```js
 const mongoose = require('mongoose')
@@ -584,9 +567,9 @@ The *new* keyword says to JavaScript that you want a brand new object generated 
 
 Inside of this, you simply need to pass in a few options to set up your model. You want to tell it the different key/value pairs you want and the datatypes that you expect them to be.
 
-For your User model, let's reference your [ERD](#mapping-your-application-with-an-erd) (entity relationship diagram) to take note of the fields you'll need. Notice that the datatype options are capitalized.
+For your User model, let's reference your [ERD](#mapping-your-application-with-an-erd) (**e**ntity **r**elationship **d**iagram) to take note of the fields you'll need. Notice that the datatype options are capitalized.
 
-You'll *require* `first`, `last`, and `email`. You'll also make sure to set up your relationship to the Recipe model by making `recipes` an array of ObjectIDs.
+You'll *require* `first`, `last`, `email`, and `password`.
 
 `{ timestamps: true }` as a secondary argument to `Schema` ensures that you receive `createdAt` and `updatedAt` fields when the document is created/updated in MongoDB.
 
@@ -597,14 +580,13 @@ const userSchema = new mongoose.Schema(
     last: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    picture: { type: String },
-    recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }]
+    picture: { type: String }
   },
   { timestamps: true }
 )
 ```
 
-Then, you need to use Mongoose's model() method to turn your regular schema into a true model, giving it much more abilities! You do that with this line:
+Then, you need to use Mongoose's `.model()` method to turn your regular schema into a true model, giving it much more abilities! You do that with this line:
 
 ```js
 const User = mongoose.model('User', userSchema)
@@ -620,10 +602,12 @@ module.exports = User
 
 Your model is now ready to be used to perform CRUD operations on your database!
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Final <b>User</b> Model file . . . </summary>
+
+<br>
 
 ```js
 const mongoose = require('mongoose')
@@ -634,8 +618,7 @@ const userSchema = new mongoose.Schema(
     last: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    picture: { type: String },
-    recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }]
+    picture: { type: String }
   },
   { timestamps: true }
 )
@@ -647,7 +630,7 @@ module.exports = User
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -662,7 +645,7 @@ You'll follow the same pattern for setting up your Recipe model. First, you need
 touch ./models/Recipe.js
 ```
 
-In this file, you'll need access to the mongoose object, so let's import that again.
+In this file, you'll need access to the `mongoose` object, so let's require that again.
 
 ```js
 const mongoose = require('mongoose')
@@ -676,9 +659,9 @@ const recipeSchema = new mongoose.Schema({
 })
 ```
 
-For your Recipe model, let's reference your [ERD](#mapping-your-application-with-an-erd) (entity relationship diagram) again to take note of the fields you'll need.
+For your Recipe model, let's reference your [ERD](#mapping-your-application-with-an-erd) (**e**ntity **r**elationship **d**iagram) again to take note of the fields you'll need.
 
-You'll *require* `title`, `description`, and `author`. You'll also make sure to set up your relationship to the User model by making `author` an ObjectID.
+You'll *require* `title`, `description`, and `author`. You'll also make sure to set up your *relationship* to the `User` model by making `author` an ObjectID.
 
 You'll want `{ timestamps: true }` on these documents as well.
 
@@ -694,7 +677,7 @@ const recipeSchema = new mongoose.Schema(
 )
 ```
 
-Then, you need to use Mongoose's `.model()` method to turn your regular schema into a true model, giving it much more abilities! You do that with this line:
+Then, you need to use Mongoose's `.model()` method again to turn your regular schema into a true model. You do that with this line:
 
 ```js
 const Recipe = mongoose.model('Recipe', recipeSchema)
@@ -708,10 +691,12 @@ module.exports = Recipe
 
 Your model is now ready to be used to perform CRUD operations on your database!
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Final <b>Recipe</b> Model file . . . </summary>
+
+<br>
 
 ```js
 const mongoose = require('mongoose')
@@ -737,7 +722,7 @@ module.exports = Recipe
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -746,8 +731,6 @@ module.exports = Recipe
 
 ## Setting Up CRUD Operations
 
-
----
 
 ### Folder Structure
 
@@ -773,7 +756,7 @@ touch ./controllers/userController.js ./controllers/recipeController.js ./contro
 
 This creates a separate route and controller file for **User**, **Recipe**, and all of your **Auth** concerns.
 
-- The *route files* will have assigned URL endpoints and their associated controller functions.
+- The *route files* will have assigned URL endpoints and references to their associated controller functions.
 
 - The *controller files* will have all of the functions and their logic. This is where the actual querying of the database will occur.
 
@@ -794,7 +777,7 @@ The pattern is:
 
 ![Pattern](./images/pattern.png)
 
-Creating and testing the EJS views will be done *after* you know all of your server functionality is working. In a real world application *or* your project, this same workflow should be followed. Planning, back-end, testing, *then* front-end, and more testing.
+Creating and testing the EJS views should be done *after* you know all of your server functionality is working. In a real world application *or* your project, this same workflow should be followed. Planning, back-end, testing, *then* front-end, and more testing.
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -818,7 +801,7 @@ These are the full routes you will be setting up in this section:
 
 Let's head over to `server.js` and set up your base route (`'/auth'`) and link up your Router file.
 
-At the top, just below your package imports, you need to import your router from `authRouter.js`:
+At the top, just below your package requires, you need to require your router from `authRouter.js`:
 
 ```js
 const authRouter = require('./routes/authRouter.js')
@@ -839,7 +822,7 @@ This tells your application that any endpoint that starts with `'http://localhos
 
 ### Registering a User
 
-Now, over in `authRouter.js`, let's set everything up. First, import `express` and set up the `router` object.
+Now, over in `authRouter.js`, let's set everything up. First, require `express` and set up the `router` object.
 
 ```js
 const express = require('express')
@@ -852,13 +835,13 @@ Now, you'll set up the method (`POST`) with the `router` object and point to the
 router.post('/sign-up', )
 ```
 
-The second argument to `.post` will be your imported controller (which you have not made yet). You'll call it `registerUser`.
+The second argument to `.post` will be your required controller (which you have not made yet). You'll call it `registerUser`.
 
 Let's pause here with it half-complete and go set that up.
 
 In `authController.js`, you'll set up a bunch of functions for various functionality and export them.
 
-First, you need to import `bcrypt` since you will be using it to *hash* and later *compare* your user's passwords.
+First, you need to require `bcrypt` since you will be using it to *hash* and later *compare* your user's passwords.
 
 ```js
 const bcrypt = require('bcrypt')
@@ -882,7 +865,7 @@ const registerUser = async (req, res) => {
 }
 ```
 
-Following what you learned in the Session Auth lesson, you'll follow these steps:
+Following what you learned about Session Auth, you'll follow these steps:
 1. Check if a user exists with the provided email
 2. Make sure the user's passwords match
 3. Hash the user's password with `bcrypt`
@@ -892,10 +875,10 @@ Following what you learned in the Session Auth lesson, you'll follow these steps
 First, you'll check the database for the user:
 
 ```js
-const userInDatabase = await User.findOne({ email: req.body.email })
+const userInDatabase = await User.exists({ email: req.body.email })
 if (userInDatabase) {
   return res.send('Username already taken!')
-  // This will be an EJS page later...
+  // This can be an EJS page later...
 }
 ```
 
@@ -904,7 +887,7 @@ Now, to check the passwords:
 ```js
 if (req.body.password !== req.body.confirmPassword) {
   return res.send('Password and Confirm Password must match')
-  // This will be also be an EJS page...
+  // This can also be an EJS page...
 }
 ```
 
@@ -922,8 +905,7 @@ await User.create({
   password: hashedPassword,
   first: req.body.first,
   last: req.body.last,
-  picture: req.body.picture,
-  recipes: []
+  picture: req.body.picture
 })
 ```
 
@@ -931,7 +913,7 @@ Finally, sending a response:
 
 ```js
 res.send(`Thanks for signing up!`)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -942,7 +924,7 @@ Don't forget to handle your errors:
 }
 ```
 
-At the bottom of your file, you'll create a module.exports that will export all of the functions you make.
+At the bottom of your file, you'll create a `module.exports` that will export all of the functions you make.
 
 ```js
 module.exports = {
@@ -950,10 +932,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>authController</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const bcrypt = require('bcrypt')
@@ -962,14 +946,14 @@ const User = require('../models/User.js')
 
 const registerUser = async (req, res) => {
   try {
-    const userInDatabase = await User.findOne({ email: req.body.email })
+    const userInDatabase = await User.exists({ email: req.body.email })
     if (userInDatabase) {
       return res.send('Username already taken!')
-      // This will be an EJS page later...
+      // This can be an EJS page later...
     }
     if (req.body.password !== req.body.confirmPassword) {
       return res.send('Password and Confirm Password must match')
-      // This will be also be an EJS page...
+      // This can also be an EJS page...
     }
     const hashedPassword = bcrypt.hashSync(req.body.password, 12)
     await User.create({
@@ -977,11 +961,10 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       first: req.body.first,
       last: req.body.last,
-      picture: req.body.picture,
-      recipes: []
+      picture: req.body.picture
     })
     res.send(`Thanks for signing up!`)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred registering a user!', error.message)
   }
@@ -994,11 +977,11 @@ module.exports = {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `authRouter.js` file and you will hook everything up.
 
-At the top, import your controller.
+At the top, require your controller.
 
 ```js
 const authController = require('../controllers/authController.js')
@@ -1016,10 +999,12 @@ Below this, you need to export `router`.
 module.exports = router
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>authRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -1034,7 +1019,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -1111,7 +1096,7 @@ First, you'll check the database for the user:
 const user = await User.findOne({ email: req.body.email })
 if (!user) {
   return res.send('No user has been registered with that email. Please sign up!')
-  // This will be an EJS page later...
+  // This can be an EJS page later...
 }
 ```
 
@@ -1142,7 +1127,7 @@ Finally, sending a response:
 
 ```js
 res.send(`Thanks for signing in, ${user.first}!`)
-// This will be an EJS page or redirect later...
+// This can be an EJS page or redirect later...
 ```
 
 Don't forget to handle your errors:
@@ -1162,10 +1147,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Final <b>signInUser</b> function . . . </summary>
+
+<br>
 
 ```js
 const signInUser = async (req, res) => {
@@ -1175,7 +1162,7 @@ const signInUser = async (req, res) => {
       return res.send(
         'No user has been registered with that email. Please sign up!'
       )
-      // This will be an EJS page later...
+      // This can be an EJS page later...
     }
     const validPassword = bcrypt.compareSync(
       req.body.password,
@@ -1183,14 +1170,14 @@ const signInUser = async (req, res) => {
     )
     if (!validPassword) {
       return res.send('Incorrect password! Please try again.')
-      // This will be also be an EJS page...
+      // This can also be an EJS page...
     }
     req.session.user = {
       email: user.email,
       _id: user._id
     }
     res.send(`Thanks for signing in, ${user.first}!`)
-    // This will be an EJS page or redirect later...
+    // This can be an EJS page or redirect later...
   } catch (error) {
     console.error('An error has occurred signing in a user!', error.message)
   }
@@ -1199,7 +1186,7 @@ const signInUser = async (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `authRouter.js` file and you will hook everything up.
 
@@ -1209,10 +1196,12 @@ In the route you left unfinished, reference the controller.
 router.post('/sign-in', authController.signInUser)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>authRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -1228,7 +1217,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -1325,10 +1314,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Final <b>signOutUser</b> function . . . </summary>
+
+<br>
 
 ```js
 const signOutUser = (req, res) => {
@@ -1343,7 +1334,7 @@ const signOutUser = (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `authRouter.js` file and hook it up.
 
@@ -1353,10 +1344,12 @@ In the route you left unfinished, reference the controller.
 router.get('/sign-out', authController.signOutUser)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>authRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -1373,7 +1366,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -1489,6 +1482,19 @@ const user = await User.findById(req.params.id)
 // Returns the full user object, including their hashed password. Never send this to anyone other than the user it belongs to.
 ```
 
+Next, you'll import your `Recipe` model so that you can find all recipes your user has made.
+
+```js
+const Recipe = require('../models/Recipe.js')
+```
+
+Now, you'll query that collection for all documents where the user's `_id` matches the `author` field on Recipe.
+
+```js
+const recipes = await Recipe.find({ author: user._id })
+// Returns all recipes where the author field is the same as the user object ID from above.
+```
+
 Now, to create a *new* object that only contains the data you want to send to the page:
 
 ```js
@@ -1497,16 +1503,17 @@ const data = {
   first: user.first,
   last: user.last,
   picture: user.picture,
-  recipes: user.recipes
+  recipes: recipes
 }
 // Notice you have left out sensitive info like the user's email and hashed password.
+// You have also added the recipes to the response.
 ```
 
 Now, to send it back as a response:
 
 ```js
 res.send(data)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -1525,10 +1532,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>userController</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const User = require('../models/User.js')
@@ -1537,16 +1546,19 @@ const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     // Returns the full user object, including their hashed password. Never send this to anyone other than the user it belongs to.
+    const recipes = await Recipe.find({ author: user._id })
+    // Returns all recipes where the author field is the same as the user object ID from above.
     const data = {
       _id: user._id,
       first: user.first,
       last: user.last,
       picture: user.picture,
-      recipes: user.recipes
+      recipes: recipes
     }
     // Notice you have left out sensitive info like the user's email and hashed password.
+    // You have also added the recipes to the response.
     res.send(data)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred finding a user!', error.message)
   }
@@ -1559,7 +1571,7 @@ module.exports = {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `userRouter.js` file and you will hook it up.
 
@@ -1581,10 +1593,12 @@ Below this, you need to export `router`.
 module.exports = router
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>userRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -1599,7 +1613,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -1671,7 +1685,7 @@ First, you'll check the database for the user:
 const user = await User.findById(req.params.id)
 if (!user) {
   return res.send('No user with that ID exists!')
-  // This will be an EJS page later...
+  // This can be an EJS page later...
 }
 ```
 
@@ -1684,7 +1698,7 @@ const validPassword = bcrypt.compareSync(
 )
 if (!validPassword) {
   return res.send('Your old password was not correct! Please try again.')
-  // This will be also be an EJS page...
+  // This can also be an EJS page...
 }
 ```
 
@@ -1693,7 +1707,7 @@ Now, to check the user's new password:
 ```js
 if (req.body.newPassword !== req.body.confirmPassword) {
   return res.send('Password and Confirm Password must match')
-  // This will be also be an EJS page...
+  // This can also be an EJS page...
 }
 ```
 
@@ -1715,7 +1729,7 @@ Finally, sending a response:
 
 ```js
 res.send(`Your password has been updated, ${user.first}!`)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -1737,10 +1751,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Final <b>updatePassword</b> function . . . </summary>
+
+<br>
 
 ```js
 const updatePassword = async (req, res) => {
@@ -1748,7 +1764,7 @@ const updatePassword = async (req, res) => {
     const user = await User.findById(req.params.id)
     if (!user) {
       return res.send('No user with that ID exists!')
-      // This will be an EJS page later...
+      // This can be an EJS page later...
     }
     const validPassword = bcrypt.compareSync(
       req.body.oldPassword,
@@ -1756,18 +1772,18 @@ const updatePassword = async (req, res) => {
     )
     if (!validPassword) {
       return res.send('Your old password was not correct! Please try again.')
-      // This will be also be an EJS page...
+      // This can also be an EJS page...
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
       return res.send('Password and Confirm Password must match')
-      // This will be also be an EJS page...
+      // This can also be an EJS page...
     }
     const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12)
     user.password = hashedPassword
     // It's critical that this field is updated with the password you hashed with bcrypt, and never the plain text password in req.body.password
     await user.save()
     res.send(`Your password has been updated, ${user.first}!`)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error(
       "An error has occurred updating a user's password!",
@@ -1779,7 +1795,7 @@ const updatePassword = async (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `authRouter.js` file and you will hook it up.
 
@@ -1789,10 +1805,12 @@ In the route you left earlier, you'll reference the function!
 router.put('/:id', authController.updatePassword)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>authRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -1810,7 +1828,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -1962,7 +1980,7 @@ Finally, you send a response:
 
 ```js
 res.send(recipe)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -1981,10 +1999,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>recipeController</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const User = require('../models/User.js')
@@ -1999,7 +2019,7 @@ const createRecipe = async (req, res) => {
     user.recipes.push(recipe._id)
     user.save()
     res.send(recipe)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred creating a recipe!', error.message)
   }
@@ -2012,7 +2032,7 @@ module.exports = {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `recipeRouter.js` file and you will hook it up.
 
@@ -2034,10 +2054,12 @@ Below this, you need to export `router`.
 module.exports = router
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>recipeRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -2052,7 +2074,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -2134,7 +2156,7 @@ Now, you send a response:
 
 ```js
 res.send(recipes)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -2154,10 +2176,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>getAllRecipes</b> function . . . </summary>
+
+<br>
 
 ```js
 const getAllRecipes = async (req, res) => {
@@ -2165,7 +2189,7 @@ const getAllRecipes = async (req, res) => {
     const recipes = await Recipe.find({})
     // findAll returns an array of every document that matches the criteria. In this case, your options object is empty (so there's no criteria).
     res.send(recipes)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred getting all recipes!', error.message)
   }
@@ -2174,7 +2198,7 @@ const getAllRecipes = async (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `recipeRouter.js` file and you will hook it up.
 
@@ -2184,10 +2208,12 @@ In the route from earlier, you reference the function:
 router.get('/', recipeController.getAllRecipes)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>recipeRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -2203,7 +2229,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -2273,7 +2299,7 @@ Now, you send a response:
 
 ```js
 res.send(recipe)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -2294,17 +2320,19 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>getRecipeById</b> function . . . </summary>
+
+<br>
 
 ```js
 const getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id)
     res.send(recipe)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred getting a recipe!', error.message)
   }
@@ -2313,7 +2341,7 @@ const getRecipeById = async (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `recipeRouter.js` file and you will hook it up.
 
@@ -2323,10 +2351,12 @@ In the route from earlier, you reference the function:
 router.get('/', recipeController.getRecipeById)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>recipeRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -2343,7 +2373,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -2426,7 +2456,7 @@ Now, you send a response:
 
 ```js
 res.send(recipe)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Don't forget to handle your errors:
@@ -2448,10 +2478,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>updateRecipeById</b> function . . . </summary>
+
+<br>
 
 ```js
 const updateRecipeById = async (req, res) => {
@@ -2459,7 +2491,7 @@ const updateRecipeById = async (req, res) => {
     const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true })
     // req.body overwrites any matching fields with the new values. Only the updated fields are necessary.
     res.send(recipe)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred updating a recipe!', error.message)
   }
@@ -2468,7 +2500,7 @@ const updateRecipeById = async (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `recipeRouter.js` file and you will hook it up.
 
@@ -2478,10 +2510,12 @@ In the route from earlier, you reference the function:
 router.put('/:id', recipeController.updateRecipeById)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>recipeRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -2499,7 +2533,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -2576,7 +2610,7 @@ Send a response:
 
 ```js
 res.send(`Recipe with ID ${req.params.id} has been deleted successfully!`)
-// This will be an EJS page later...
+// This can be an EJS page later...
 ```
 
 Handle errors:
@@ -2598,10 +2632,12 @@ module.exports = {
 }
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>deleteRecipeById</b> function . . . </summary>
+
+<br>
 
 ```js
 const deleteRecipeById = async (req, res) => {
@@ -2609,7 +2645,7 @@ const deleteRecipeById = async (req, res) => {
     await Recipe.findByIdAndDelete(req.params.id)
     // No need to store this in a variable since it's being deleted
     res.send(`Recipe with ID ${req.params.id} has been deleted successfully!`)
-    // This will be an EJS page later...
+    // This can be an EJS page later...
   } catch (error) {
     console.error('An error has occurred deleting a recipe!', error.message)
   }
@@ -2618,7 +2654,7 @@ const deleteRecipeById = async (req, res) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, head back to your `recipeRouter.js` file and you will hook it up.
 
@@ -2628,10 +2664,12 @@ In the route from earlier, you reference the function:
 router.delete('/:id', recipeController.deleteRecipeById)
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 Your <b>recipeRouter</b> file so far . . . </summary>
+
+<br>
 
 ```js
 const express = require('express')
@@ -2650,7 +2688,7 @@ module.exports = router
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Run your server...
 
@@ -2729,10 +2767,12 @@ touch ./views/partials/header.ejs ./views/partials/footer.ejs
 
 In the following sections, you can copy/paste the EJS from these snippets to their respective files. Or, feel free to create your own!
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>index.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('./partials/header.ejs') %>
@@ -2745,10 +2785,12 @@ In the following sections, you can copy/paste the EJS from these snippets to the
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>header.ejs</b></summary>
+
+<br>
 
 ```html
 <!DOCTYPE html>
@@ -2783,7 +2825,7 @@ In the following sections, you can copy/paste the EJS from these snippets to the
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 For your header to be able to use the `session` object to conditionally render the nav, you need to set up a middleware in your `server.js`. Just under your middleware stack:
 
@@ -2794,10 +2836,12 @@ app.use((req, res, next) => {
 })
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>footer.ejs</b></summary>
+
+<br>
 
 ```html
     </main>
@@ -2810,7 +2854,7 @@ app.use((req, res, next) => {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, you'll set up your base route in `server.js` to render your `index.js`. This replaces your old `res.send`.
 
@@ -2843,10 +2887,12 @@ Then:
 touch ./views/auth/sign-up.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>sign-up.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -2867,7 +2913,7 @@ touch ./views/auth/sign-up.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Now, let's create a route to render this view.
 
@@ -2894,10 +2940,12 @@ Let's also make a page that thanks them for signing up:
 touch ./views/auth/thanks.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>thanks.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -2912,7 +2960,7 @@ touch ./views/auth/thanks.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 In `authController.js`, you'll render this EJS page after the user registers.
 
@@ -2935,10 +2983,12 @@ You also need a view to allow existing users to sign in.
 touch ./views/auth/sign-in.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>sign-in.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -2955,7 +3005,7 @@ touch ./views/auth/sign-in.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Then in `authRouter.js`, add:
 
@@ -2996,10 +3046,12 @@ Then, create the file:
 touch ./views/users/profile.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>profile.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3023,7 +3075,7 @@ touch ./views/users/profile.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Back in your `userController.js`, you need to make sure you populate the recipes field when you get your user from the database.
 
@@ -3052,10 +3104,12 @@ This page allows the user to update their password.
 touch ./views/auth/update-password.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>update-password.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3073,7 +3127,7 @@ touch ./views/auth/update-password.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 In `authRouter.js`, render the route using your session object to grab the user info:
 
@@ -3096,10 +3150,12 @@ You also need a page that confirms the password has been updated. You'll render 
 touch ./views/auth/confirm.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>confirm.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3111,7 +3167,7 @@ touch ./views/auth/confirm.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 In your `authController.js` file, you need to replace the `res.send` in your `updatePassword` controller with:
 
@@ -3119,6 +3175,7 @@ In your `authController.js` file, you need to replace the `res.send` in your `up
 res.render('./auth/confirm.ejs', { user })
 ```
 
+[📖 Back to Top](#-table-of-contents)
 
 ---
 
@@ -3130,10 +3187,12 @@ A list of all recipes in the app.
 touch ./views/recipes/all.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>all.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3152,7 +3211,7 @@ touch ./views/recipes/all.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Over in your `recipeController.js`, you need to replace the `res.send` in `getAllRecipes` with a render of your new page:
 
@@ -3173,10 +3232,12 @@ A detailed view of a single recipe.
 touch ./views/recipes/show.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>show.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3206,7 +3267,7 @@ touch ./views/recipes/show.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 In `recipeController.js`, update the `res.send` in `getRecipeById` with:
 
@@ -3229,10 +3290,12 @@ You need a form where users can create new recipes.
 touch ./views/recipes/new.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>new.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3251,7 +3314,7 @@ touch ./views/recipes/new.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 Route to render the form in `recipeRouter.js`. This needs to go above any `'/:id'` routes:
 
@@ -3280,10 +3343,12 @@ A form to edit an existing recipe.
 touch ./views/recipes/edit.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>edit.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3301,7 +3366,7 @@ touch ./views/recipes/edit.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 In `recipeRouter.js`, you need to import your `Recipe` model because you'll need the recipe details when you edit:
 
@@ -3335,10 +3400,12 @@ A page that confirms to the user that the recipe has been deleted.
 touch ./views/recipes/confirm.ejs
 ```
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>confirm.ejs</b></summary>
+
+<br>
 
 ```html
 <%- include('../partials/header.ejs') %>
@@ -3350,7 +3417,7 @@ touch ./views/recipes/confirm.ejs
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 After you delete the recipe, you need to render the confirm page. In your `recipeController.js` file, in `deleteRecipeById`, replace the `res.send` with:
 
@@ -3387,10 +3454,12 @@ app.use(express.static('public'))
 
 Now your project will be able to find and use your `style.css` file.
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 <details>
 <summary>💡 <b>style.css</b></summary>
+
+<br>
 
 ```css
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
@@ -3510,7 +3579,7 @@ footer {
 
 </details>
 
-<br>
+· · · · · · · · · · · · · · · · · · · ·
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -3545,12 +3614,17 @@ Documentation:
 - [method-override](https://www.npmjs.com/package/method-override)
 - [express-session](https://www.npmjs.com/package/express-session)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [nodemon](https://www.npmjs.com/package/nodemon)
 
 ERD Tools:
 - [Canva](http://www.canva.com)
 - [Figma](https://www.figma.com)
 - [draw.io](https://app.diagrams.net/)
 - [LucidChart](https://www.lucidchart.com/)
+
+Testing:
+- [Insomnia](https://insomnia.rest/)
+- [Postman](https://www.postman.com/downloads/)
 
 ![Michael & Patch Enjoy the Credits](./images/credits.gif)
 
