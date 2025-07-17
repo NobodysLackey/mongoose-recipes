@@ -284,7 +284,17 @@ Then, add this `start` script to your `package.json`:
 },
 ```
 
-If you choose to use `nodemon`, you don't even technically have to use this "start" script. You can simply run `nodemon` in your terminal and it will automatically run your server file!
+If you choose to use `nodemon`, you don't even technically have to use this "start" script. You can simply run `nodemon` in your terminal and it will automatically run your server file!  
+
+In your `package.json`, simply change `"main": "index.js"` to `"main": "server.js"` and `nodemon` will automatically know what file to run.
+
+```json
+{
+  "name": "mongoose-recipes",
+  "version": "1.0.0",
+  "main": "server.js",
+}
+```
 
 </details>
 
