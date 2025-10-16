@@ -5,7 +5,7 @@
 
 ## Description
 
-In this codealong, you will build a full stack MEN (Mongoose Express Node) application with full CRUD operations and user authentication.  The goal will be to build an app where user's can sign up, sign in, sign out, change their password, and create, read, update, and delete recipes.
+In this codealong, you will build a full stack MEN (**Mongoose**, **Express**, **Node**) application with full CRUD operations and user authentication.  The goal will be to build an app where users can sign up, sign in, sign out, change their password, and ***C****reate*, ***R****ead*, ***U****pdate*, and ***D****elete* recipes.
 
 You can go [here](https://mongoose-recipes.fly.dev/) and see a deployed version of what you plan to build.
 
@@ -77,11 +77,11 @@ Let's break each of these down:
 - `dotenv` - a library that allows your JavaScript files to extract environment variables from a `.env` file
 - `mongoose` - a library that enables you to set up Schema structures and provides methods for performing CRUD operations on your MongoDB database
 - `ejs` - the templating engine that allows you to send HTML (ejs) snippets to your browser from the server side
-- `method-override` - allow you to perform PUT/DELETE functionality from an HTML form
+- `method-override` - allows you to perform PUT/DELETE functionality from an HTML form
 - `express-session` - is required for authentication and allows your Express server to access the `session` object
 - `bcrypt` - used to *hash* and *compare* your user's password when setting up your session authentication
 
-Once these installs complete, you should see them listed alongside their version numbers in the `"dependencies"` key of your `package.json` file.  A `node_modules` folder and a `package-lock.json` file will also be generated. 
+Once these installs complete, you should see them listed alongside their version numbers in the `"dependencies"` key of your `package.json` file.  A `node_modules` folder and a `package-lock.json` file will also be generated.
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -90,15 +90,15 @@ Once these installs complete, you should see them listed alongside their version
 
 ## Ensuring Git Ignores Certain Files/Folders
 
-Next, you'll need to make sure that things like your `node_modules` folder do not get tracked by git as you work on your project. In your terminal:
+Next, you'll need to make sure that things like your `node_modules` folder do not get tracked by **git** as you work on your project. In your terminal:
 
 ```sh
 touch .gitignore
 ```
 
-This file should reside in the root of your project - same level as your `package.json`. 
+This file should reside in the root of your project at the same level as your `package.json`.
 
-Anything you put in this file will not be tracked by git.
+Anything you put in this file will not be tracked by **git**.
 
 For now, put:
 
@@ -116,31 +116,31 @@ package-lock.json
 
 ## Setting Up Your Express Server
 
-You need a file to set up your Express server in. By convention, you'll create a `server.js` file in the root of your repository.
+You need a file to set up your **Express** server in. By convention, you'll create a `server.js` file in the root of your repository.
 
 ```sh
 touch server.js
 ```
 
-In this file, you'll require the Express library.
+In this file, you'll require the **Express** library.
 
 ```js
 const express = require('express')
 ```
 
-You also will want to require and set up Morgan for logging.
+You also will want to require and set up **Morgan** for logging.
 
 ```js
 const logger = require('morgan')
 ```
 
-Next, you'll require Method Override. You'll need this later when you set up your forms.
+Next, you'll require **Method Override**. You'll need this later when you set up your forms.
 
 ```js
 const methodOverride = require('method-override')
 ```
 
-This app will have authentication, so you will also need to set up Express Session.
+This app will have authentication, so you will also need to set up **Express Session**.
 
 ```js
 const session = require('express-session')
@@ -169,7 +169,7 @@ app.use(session({
 
 Note that the `session` method takes in an object with three key/value pairs:
 
-1.  Your app secret that you will set up in your `.env` later
+1.  Your app **"secret"** that you will set up in your `.env` later
 2.  An option called **"resave"** set to `false` to ensure that the session object is only restored if modified
 3.  An option called **"saveUninitialized"** set to `true` to ensure that a session object is saved even if it contains no data
 
@@ -258,7 +258,7 @@ app.listen(PORT, () => {
 
 ### Running and Testing Your Server
 
-Now that your basic Express server is set up to run, you need to test it out.
+Now that your basic **Express** server is set up to run, you need to test it out.
 
 In your `package.json` file, let's add a script to run your server. There are two options for this:
 
@@ -284,7 +284,7 @@ Then, add this `start` script to your `package.json`:
 },
 ```
 
-If you choose to use `nodemon`, you don't even technically have to use this "start" script. You can simply run `nodemon` in your terminal and it will automatically run your server file!  
+If you choose to use `nodemon`, you don't even technically have to use this "start" script. You can simply run `nodemon` in your terminal and it will automatically run your server file!
 
 In your `package.json`, simply change `"main": "index.js"` to `"main": "server.js"` and `nodemon` will automatically know what file to run.
 
@@ -305,7 +305,7 @@ In your `package.json`, simply change `"main": "index.js"` to `"main": "server.j
 
 <br>
 
-`node --watch` is a built-in Node flag (as of version 18) that restarts your app when watched files change — similar to `nodemon`, but without having to install an extra dependency.
+`node --watch` is a built-in **Node** flag (as of version 18) that restarts your app when watched files change — similar to `nodemon`, but without having to install an extra dependency.
 
 To use, just add this `start` script to your `package.json`:
 
@@ -330,12 +330,12 @@ npm start
 You should see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 ```
 
-Now let's make a request to `'http://localhost:3000/'` with [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/downloads/) to test your base route.
+Now, let's make a request to `'http://localhost:3000/'` with [Insomnia](https://insomnia.rest/) or [Postman](https://www.postman.com/downloads/) to test your base route.
 
-The response you get should be `Your app is connected . . . `. You will eventually replace this with your rendered EJS home page. This is just a test to make sure your server is set up properly.
+The response you get should be `Your app is connected . . . `. You will eventually replace this with your rendered **EJS** home page. This is just a test to make sure your server is set up properly.
 
 For now, let's stop your server by pressing <kbd>Ctrl</kbd> + <kbd>C</kbd>.
 
@@ -357,7 +357,7 @@ In terminal:
 touch .env
 ```
 
-This file should reside in the root of your project - same level as your `package.json`.
+This file should reside in the root of your project at the same level as your `package.json`.
 
 You definitely don't want to push this file to GitHub, so let's immediately add it to the bottom of your `.gitignore` file.
 
@@ -376,7 +376,7 @@ Leave the `.env` file empty for now.
 
 ### Getting Your Connection String
 
-You need to allow your server to access your database on [MongoDB Atlas](https://www.mongodb.com/atlas). To do this, you will always need your secure connection string. 
+You need to allow your server to access your database on [MongoDB Atlas](https://www.mongodb.com/atlas). To do this, you will always need your secure connection string.
 
 To access this, [sign in](https://account.mongodb.com/account/login) to Atlas.
 
@@ -405,9 +405,9 @@ You will take this string and paste it into your `.env` file under the variable 
 MONGODB_URI=mongodb+srv://<your_username>:<db_password>@<cluster_name>.qscuy.azure.mongodb.net/<database-name>?retryWrites=true&w=majority&appName=cluster_name
 ```
 
-Yours may look completely different than the example above due to the host and region you selected on setup, and that is fine. After pasting your connection string, you need to replace `<db_password>` with *your* database password. Replace the `< >` as well.
+Yours may look completely different than the example above due to the host and region you selected on setup, and that is fine. After pasting your connection string, you need to replace `<db_password>` with *your* database password. Replace the `< >` characters as well.
 
-There are a few query parameters at the end of the connection string. Each serves a unique purpose. 
+There are a few query parameters at the end of the connection string. Each serves a unique purpose.
 
 · · · · · · · · · · · · · · · · · · · ·
 
@@ -420,7 +420,7 @@ There are a few query parameters at the end of the connection string. Each serve
 retryWrites=true
 ```
 
-This first query parameter tells MongoDB to automatically retry write operations (like insert, update, delete) *once* if they fail due to an error like a dropped connection.
+This first query parameter tells **MongoDB** to automatically retry write operations (like insert, update, delete) *once* if they fail due to an error like a dropped connection.
 
 This is recommended to **keep**.
 
@@ -428,7 +428,7 @@ This is recommended to **keep**.
 w=majority
 ```
 
-When MongoDB saves our data, it does so on multiple servers to ensure data is not lost. `w=majority` tells MongoDB not to return a *success code* until a **majority** of these servers have successfully received this data.
+When **MongoDB** saves our data, it does so on multiple servers to ensure data is not lost. `w=majority` tells **MongoDB** not to return a *success code* until a *majority* of these servers have successfully received this data.
 
 This is best to **keep** for production code.
 
@@ -446,9 +446,9 @@ You can **keep** it and name it whatever you want or **remove** it.
 
 Now, you need to name your new database. In the connection string, right after `mongodb.net/` but before the `?`, write the name of the database you are building.
 
-For this app, you'll say `mongoose-recipes`. 
+For this app, you'll say `mongoose-recipes`.
 
-If you do not specify the database, MongoDB will use `test` by default. You don't want that.
+If you do not specify the database, **MongoDB** will use `test` by default. You don't want that.
 
 Next, since you're already in your `.env`, you need to go ahead and set your `SESSION_SECRET` for later.
 
@@ -458,7 +458,7 @@ SESSION_SECRET=areallyrandomandlongstring
 
 This can be any string. Unpredictable and random is best. It's the fact that only *you* have it that makes it secure.
 
-Save your `.env` file. If you left your server running, you'll need to restart it now. 
+Save your `.env` file. If you left your server running, you'll need to restart it now.
 
 ***Your server always needs to restart after changes to a `.env` file.***
 
@@ -495,7 +495,7 @@ mongoose.connection.on("connected", () => {
 module.exports = mongoose
 ```
 
-In order for this to occur when you run your server, you just need to require this file at the top of your `server.js`. This will run the file, and automatically execute your mongoose connection.
+In order for this to occur when you run your server, you just need to require this file at the top of your `server.js`. This will run the file, and automatically execute your **Mongoose** connection.
 
 In `server.js`, just below your other requires...
 
@@ -512,7 +512,7 @@ npm start
 You should now see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
@@ -525,14 +525,14 @@ Successfully connected to MongoDB database . . .
 
 ## Creating Models with the Mongoose Schema Class
 
-One of the things that Mongoose allows you to do is to set up templates or *schemas* for your MongoDB documents to follow. This ensures that each document is inserted in the database in a designated way, preventing errors. This takes a non-relational / noSQL database, and gives it many of the advantages of a relational / SQL database. It's the best of both worlds!
+One of the things that **Mongoose** allows you to do is to set up templates or *schemas* for your **MongoDB** documents to follow. This ensures that each document is inserted in the database in a designated way, preventing errors. This takes a non-relational / noSQL database, and gives it many of the advantages of a relational / SQL database. It's the best of both worlds!
 
 
 ---
 
 ### Mapping Your Application with an ERD
 
-ERD stands for **E**ntity **R**elationship **D**iagram. We use this as a way of planning your database structure and devising your models. In this app, you want to have Users that can sign up, sign in, and add many Recipes. So you'll need two models - **User** and **Recipe**. When making an ERD, think of the fields and datatypes you will need, as well as the relationships between your models. In this case, you'll establish a ***One to Many*** relationship. Here is the ERD you will need for this app:
+ERD stands for **E**ntity **R**elationship **D**iagram. We use this as a way of planning your database structure and devising your models. In this app, you want to have *Users* that can sign up, sign in, and add many *Recipes*. So you'll need two models - `User` and `Recipe`. When making an ERD, think of the fields and datatypes you will need, as well as the relationships between your models. In this case, you'll establish a *One to Many* relationship. Here is the ERD you will need for this app:
 
 ![ERD](./images/erd.png)
 
@@ -553,7 +553,7 @@ Let's start off by making a `models` directory.
 mkdir models
 ```
 
-In this folder, you'll create a file for the particular resource you want a schema for. For this app, since you will have authentication, you will need a `User` model. By convention, when you name this file, the resource is **singular** and **PascalCased** since it represents the template you will follow for a *single* document. Name the file `User.js`.
+In this folder, you'll create a file for the particular resource you want a schema for. For this app, since you will have authentication, you will need a `User` model. By convention, when you name this file, the resource is *singular* and *PascalCased* since it represents the template you will follow for a *single* document. Name the file `User.js`.
 
 ```sh
 touch ./models/User.js
@@ -565,7 +565,7 @@ In this file, you'll need access to the `mongoose` object, so let's require that
 const mongoose = require('mongoose')
 ```
 
-Now, you'll need a new instance of the *Schema class* from Mongoose. In JavaScript, classes can be used to create reusable objects that all share similar properties and methods (built-in functions).  Mongoose uses this to create a new model for you. By convention, the name of this variable will be your resource + Schema to clearly designate it.
+Now, you'll need a new instance of the *Schema* class from **Mongoose**. In JavaScript, classes can be used to create reusable objects that all share similar properties and methods (built-in functions).  **Mongoose** uses this to create a new model for you. By convention, the name of this variable will be your resource + Schema to clearly designate it.
 
 ```js
 const userSchema = new mongoose.Schema({
@@ -573,15 +573,15 @@ const userSchema = new mongoose.Schema({
 })
 ```
 
-The *new* keyword says to JavaScript that you want a brand new object generated from the `mongoose.Schema` class. When this happens, the object you get back has all the properties and methods available to Schemas in Mongoose. 
+The *new* keyword says to JavaScript that you want a brand new object generated from the `mongoose.Schema` class. When this happens, the object you get back has all the properties and methods available to Schemas in **Mongoose**.
 
 Inside of this, you simply need to pass in a few options to set up your model. You want to tell it the different key/value pairs you want and the datatypes that you expect them to be.
 
-For your User model, let's reference your [ERD](#mapping-your-application-with-an-erd) (**e**ntity **r**elationship **d**iagram) to take note of the fields you'll need. Notice that the datatype options are capitalized.
+For your `User` model, let's reference your [ERD](#mapping-your-application-with-an-erd) (**E**ntity **R**elationship **D**iagram) to take note of the fields you'll need. Notice that the datatype options are capitalized.
 
 You'll *require* `first`, `last`, `email`, and `password`.
 
-`{ timestamps: true }` as a secondary argument to `Schema` ensures that you receive `createdAt` and `updatedAt` fields when the document is created/updated in MongoDB.
+`{ timestamps: true }` as a secondary argument to `Schema` ensures that you receive `createdAt` and `updatedAt` fields when the document is created/updated in **MongoDB**.
 
 ```js
 const userSchema = new mongoose.Schema(
@@ -596,7 +596,7 @@ const userSchema = new mongoose.Schema(
 )
 ```
 
-Then, you need to use Mongoose's `.model()` method to turn your regular schema into a true model, giving it much more abilities! You do that with this line:
+Then, you need to use **Mongoose**'s `.model()` method to turn your regular schema into a true model, giving it much more abilities! You do that with this line:
 
 ```js
 const User = mongoose.model('User', userSchema)
@@ -604,7 +604,7 @@ const User = mongoose.model('User', userSchema)
 
 By convention, the first argument to this method will be a *PascalCased* string of your collection name - in this case, `"User"`. The second argument is the `userSchema` variable from above.
 
-Now you export it so that you can utilize it elsewhere in your app.
+Now, you export it so that you can utilize it elsewhere in your app.
 
 ```js
 module.exports = User
@@ -649,7 +649,7 @@ module.exports = User
 
 ### Creating Your Recipe Model
 
-You'll follow the same pattern for setting up your Recipe model. First, you need your file...
+You'll follow the same pattern for setting up your `Recipe` model. First, you need your file...
 
 ```sh
 touch ./models/Recipe.js
@@ -661,7 +661,7 @@ In this file, you'll need access to the `mongoose` object, so let's require that
 const mongoose = require('mongoose')
 ```
 
-Now, you'll need a new instance of the *Schema class* from Mongoose. By convention, the name of this variable will be your resource + Schema to clearly designate it.
+Now, you'll need a new instance of the *Schema class* from **Mongoose**. By convention, the name of this variable will be your resource + Schema to clearly designate it.
 
 ```js
 const recipeSchema = new mongoose.Schema({
@@ -669,7 +669,7 @@ const recipeSchema = new mongoose.Schema({
 })
 ```
 
-For your Recipe model, let's reference your [ERD](#mapping-your-application-with-an-erd) (**e**ntity **r**elationship **d**iagram) again to take note of the fields you'll need.
+For your `Recipe` model, let's reference your [ERD](#mapping-your-application-with-an-erd) (**E**ntity **R**elationship **D**iagram) again to take note of the fields you'll need.
 
 You'll *require* `title`, `description`, and `author`. You'll also make sure to set up your *relationship* to the `User` model by making `author` an ObjectID.
 
@@ -687,7 +687,7 @@ const recipeSchema = new mongoose.Schema(
 )
 ```
 
-Then, you need to use Mongoose's `.model()` method again to turn your regular schema into a true model. You do that with this line:
+Then, you need to use **Mongoose**'s `.model()` method again to turn your regular schema into a true model. You do that with this line:
 
 ```js
 const Recipe = mongoose.model('Recipe', recipeSchema)
@@ -744,7 +744,7 @@ module.exports = Recipe
 
 ### Folder Structure
 
-In order to keep your application organized and set up for future expansion and growth in functionality and scope, you will arrange your file structure in a certain way. 
+In order to keep your application organized and set up for future expansion and growth in functionality and scope, you will arrange your file structure in a certain way.
 
 Let's create two new folders...
 
@@ -764,7 +764,7 @@ and...
 touch ./controllers/userController.js ./controllers/recipeController.js ./controllers/authController.js
 ```
 
-This creates a separate route and controller file for **User**, **Recipe**, and all of your **Auth** concerns.
+This creates a separate route and controller file for `User`, `Recipe`, and all of your `Auth` concerns.
 
 - The *route files* will have assigned URL endpoints and references to their associated controller functions.
 
@@ -787,7 +787,7 @@ The pattern is:
 
 ![Pattern](./images/pattern.png)
 
-Creating and testing the EJS views should be done *after* you know all of your server functionality is working. In a real world application *or* your project, this same workflow should be followed. Planning, back-end, testing, *then* front-end, and more testing.
+Creating and testing the **EJS** views should be done *after* you know all of your server functionality is working. In a real world application *or* your project, this same workflow should be followed. Planning, back-end, testing, *then* front-end, and more testing.
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -1040,11 +1040,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `POST` request to `'http://localhost:3000/auth/sign-up'` with something like the following as the request body:
+Now, you test with **Insomnia** or **Postman** - a `POST` request to `'http://localhost:3000/auth/sign-up'` with something like the following as the request body:
 
 ```json
 {
@@ -1057,7 +1057,7 @@ Now, you test with Insomnia or Postman - a `POST` request to `'http://localhost:
 }
 ```
 
-Later, this will be coming from your Form fields in your EJS.
+Later, this will be coming from your Form fields in your **EJS**.
 
 ![Sign Up Response](./images/sign-up-response.png)
 
@@ -1238,11 +1238,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `POST` request to `'http://localhost:3000/auth/sign-in'` with something like the following as the request body:
+Now, you test with **Insomnia** or **Postman** - a `POST` request to `'http://localhost:3000/auth/sign-in'` with something like the following as the request body:
 
 ```json
 {
@@ -1251,7 +1251,7 @@ Now, you test with Insomnia or Postman - a `POST` request to `'http://localhost:
 }
 ```
 
-Later, this will be coming from your Form fields in your EJS.
+Later, this will be coming from your Form fields in your **EJS**.
 
 ![Sign In Response](./images/sign-in-response.png)
 
@@ -1300,7 +1300,7 @@ You'll use the `session` object's built in `.destroy()` method:
 req.session.destroy()
 ```
 
-Then, send the user back to the home page (which you'll build in EJS later):
+Then, send the user back to the home page (which you'll build in **EJS** later):
 
 ```js
 res.redirect('/')
@@ -1387,11 +1387,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `GET` request to `'http://localhost:3000/auth/sign-out'`. No request body needed.
+Now, you test with **Insomnia** or **Postman** - a `GET` request to `'http://localhost:3000/auth/sign-out'`. No request body needed.
 
 ![Sign Out Response](./images/sign-out-response.png)
 
@@ -1407,9 +1407,9 @@ You've completed the process again from *route* to *controller* to *testing*! Do
 
 ## User CRUD Functionality
 
-As you proceed to this next section, it's important to reflect on the website you *want* to make. What functionality do you want your user to have? What page views are you thinking you'll show? 
+As you proceed to this next section, it's important to reflect on the website you *want* to make. What functionality do you want your user to have? What page views are you thinking you'll show?
 
-You've set up a couple routes that have to do with the user, sorted separately in Auth because they had to do with registering, signing in, and signing out. But what if you wanted a page that showed a user's profile? You need to consider what data your back-end server needs to send to the page, and how to get it.
+You've set up a couple routes that have to do with the user, sorted separately in `Auth` because they had to do with registering, signing in, and signing out. But what if you wanted a page that showed a user's profile? You need to consider what data your back-end server needs to send to the page, and how to get it.
 
 These are the full routes you will be setting up in this section:
 
@@ -1634,11 +1634,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `GET` request to `"http://localhost:3000/users/<some-users-id>"` with a *real ObjectID* of a user you've made in your database:
+Now, you test with **Insomnia** or **Postman** - a `GET` request to `"http://localhost:3000/users/<some-users-id>"` with a *real ObjectID* of a user you've made in your database:
 
 Later, this will be coming from your route that you direct a user to when they click on another user's profile.
 
@@ -1750,7 +1750,7 @@ Don't forget to handle your errors:
 }
 ```
 
-At the bottom of your file, add the function to the module.exports.
+At the bottom of your file, add the function to the `module.exports`.
 
 ```js
 module.exports = {
@@ -1849,11 +1849,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `PUT` request to `'http://localhost:3000/auth/<some-users-id>'` with something like the following as the request body:
+Now, you test with **Insomnia** or **Postman** - a `PUT` request to `'http://localhost:3000/auth/<some-users-id>'` with something like the following as the request body:
 
 ```json
 {
@@ -1863,7 +1863,7 @@ Now, you test with Insomnia or Postman - a `PUT` request to `'http://localhost:3
 }
 ```
 
-Later, this will be coming from your Form fields in your EJS.
+Later, this will be coming from your Form fields in your **EJS**.
 
 ![Update Password Response](./images/update-pw-response.png)
 
@@ -1879,7 +1879,7 @@ Another round with the pattern - complete!
 
 ## Recipe CRUD Functionality
 
-Let's think again about the website you *want* to make. What functionality do you want your user to have? What page views are you thinking you'll show? 
+Let's think again about the website you *want* to make. What functionality do you want your user to have? What page views are you thinking you'll show?
 
 You want your user to be able to create new recipes. You want to show a list of a bunch of recipes. You want to be able to go deeper and see details about a single recipe. You want a user to be able to update and delete their own recipes.
 
@@ -1937,7 +1937,7 @@ Let's pause here.
 
 In `recipeController.js`, you'll set up this function.
 
-You will need access to your `Recipe` model since you will be using it's `create` method to add a recipe document to your database. 
+You will need access to your `Recipe` model since you will be using it's `create` method to add a recipe document to your database.
 
 But you also need access to your `User` model since you need to add the new recipe to your user's array of recipes.
 
@@ -2001,7 +2001,7 @@ Don't forget to handle your errors:
 }
 ```
 
-At the bottom of your file, you'll create a module.exports that will export all of the functions you make.
+At the bottom of your file, you'll create a `module.exports` that will export all of the functions you make.
 
 ```js
 module.exports = {
@@ -2095,11 +2095,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `POST` request to `'http://localhost:3000/recipes'` with something like the following as the request body. Take note, the ObjectID in `author` needs to be *your* user:
+Now, you test with **Insomnia** or **Postman** - a `POST` request to `'http://localhost:3000/recipes'` with something like the following as the request body. Take note, the ObjectID in `author` needs to be *your* user:
 
 ```json
 {
@@ -2110,7 +2110,7 @@ Now, you test with Insomnia or Postman - a `POST` request to `'http://localhost:
 }
 ```
 
-Later, this will be coming from your Form fields in your EJS.
+Later, this will be coming from your Form fields in your **EJS**.
 
 ![Create Recipe Response](./images/create-recipe-response.png)
 
@@ -2250,11 +2250,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `GET` request to `'http://localhost:3000/recipes'`. No need for a request body.
+Now, you test with **Insomnia** or **Postman** - a `GET` request to `'http://localhost:3000/recipes'`. No need for a request body.
 
 ![Get Recipes Response](./images/get-recipes-response.png)
 
@@ -2394,15 +2394,15 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `GET` request to `'http://localhost:3000/recipes/<some-recipe-id>'`. The `id` needs to be an ObjectID from *your* database.
+Now, you test with **Insomnia** or **Postman** - a `GET` request to `'http://localhost:3000/recipes/<some-recipe-id>'`. The `id` needs to be an ObjectID from *your* database.
 
 ![Get Recipe Response](./images/get-recipe-response.png)
 
-The pattern is a formula that will give you consistent success.
+The pattern is a formula that will give you consistent success and minimize mistakes.
 
 [📖 Back to Top](#-table-of-contents)
 
@@ -2452,7 +2452,7 @@ Find the recipe:
 const recipe = await Recipe.findByIdAndUpdate(req.params.id, )
 ```
 
-The second argument to `findByIdAndUpdate` is an object with the updated fields - `req.body`. 
+The second argument to `findByIdAndUpdate` is an object with the updated fields - `req.body`.
 
 The third argument is an optional object with various options in it. The option you want is `new: true`. This ensures that the updated record is returned from the database:
 
@@ -2554,11 +2554,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `PUT` request to `'http://localhost:3000/recipes/<some-recipe-id>'`. The `id` needs to be an ObjectID from *your* database. The request body might look something like this:
+Now, you test with **Insomnia** or **Postman** - a `PUT` request to `'http://localhost:3000/recipes/<some-recipe-id>'`. The `id` needs to be an ObjectID from *your* database. The request body might look something like this:
 
 ```json
 {
@@ -2709,11 +2709,11 @@ npm start
 You'll see:
 
 ```txt
-Running Server on Port 3000 . . . 
+Running Server on Port 3000 . . .
 Successfully connected to MongoDB database . . .
 ```
 
-Now, you test with Insomnia or Postman - a `DELETE` request to `'http://localhost:3000/recipes/<some-recipe-id>'`. The `id` needs to be an ObjectID from *your* database. No request body.
+Now, you test with **Insomnia** or **Postman** - a `DELETE` request to `'http://localhost:3000/recipes/<some-recipe-id>'`. The `id` needs to be an ObjectID from *your* database. No request body.
 
 ![Delete Recipe Response](./images/delete-recipe-response.png)
 
@@ -2730,7 +2730,7 @@ The pattern once again shows it's quality.
 
 With this final operation, you have finished creating and testing your entire back-end server.  You have all the functionality you want for your website and the ability to interact with the database how you need.
 
-Now, as you move forward and create and test your "front-end" views, you will know that your server is complete. This allows you to more appropriately troubleshoot issues. By knowing that the issue must be coming from your EJS/HTML structure and/or your browser, you can more effectively track them down and solve the errors.
+Now, as you move forward and create and test your "front-end" views, you will know that your server is complete. This allows you to more appropriately troubleshoot issues. By knowing that the issue must be coming from your **EJS**/**HTML** structure and/or your browser, you can more effectively track them down and solve the errors.
 
 This same mindset should be used in real world websites *and* your projects.
 
@@ -2744,14 +2744,14 @@ This same mindset should be used in real world websites *and* your projects.
 
 ## Creating Your EJS Views
 
-In this section, you will transition to the "front-end" / client-facing part of your website. You'll largely be copying/pasting EJS templates that will be given to you. As you do, you'll discuss and review each page and it's purpose. Then, you'll be setting up routes and controllers for each to ensure your pages are rendered/redirected appropriately.
+In this section, you will transition to the "front-end" / client-facing part of your website. You'll largely be copying/pasting **EJS** templates that will be given to you. As you do, you'll discuss and review each page and it's purpose. Then, you'll be setting up routes and controllers for each to ensure your pages are rendered / redirected appropriately.
 
 
 ---
 
 ### Home Page & Partials
 
-Let's create a landing page for your website. Then, you'll set up your base route (`'/'`) to render the EJS file.
+Let's create a landing page for your website. Then, you'll set up your base route (`'/'`) to render the **EJS** file.
 
 First off, you need a `views` directory.
 
@@ -2765,7 +2765,7 @@ And create your `index.ejs` file.
 touch ./views/index.ejs
 ```
 
-Before you get to work in this file, you know you'll also need a few partials. One of these will be all of your head HTML and another will be the footer of every page. So let's create that directory and two files as well.
+Before you get to work in this file, you know you'll also need a few partials. One of these will be all of your head **HTML** and another will be the footer of every page. So let's create that directory and two files as well.
 
 ```sh
 mkdir ./views/partials
@@ -2775,7 +2775,7 @@ mkdir ./views/partials
 touch ./views/partials/header.ejs ./views/partials/footer.ejs
 ```
 
-In the following sections, you can copy/paste the EJS from these snippets to their respective files. Or, feel free to create your own!
+In the following sections, you can copy/paste the **EJS** from these snippets to their respective files. Or, feel free to create your own!
 
 · · · · · · · · · · · · · · · · · · · ·
 
@@ -2972,7 +2972,7 @@ touch ./views/auth/thanks.ejs
 
 · · · · · · · · · · · · · · · · · · · ·
 
-In `authController.js`, you'll render this EJS page after the user registers.
+In `authController.js`, you'll render this page after the user registers.
 
 In `registerUser`, replace your `res.send` with this:
 
@@ -3261,7 +3261,7 @@ touch ./views/recipes/show.ejs
 <p><%= recipe.description %></p>
 
 <% if (user._id === recipe.author._id.toString()) { %>
-  
+
 <form action="/recipes/<%= recipe._id %>/edit">
   <button>Edit</button>
 </form>
@@ -3442,9 +3442,9 @@ res.render('./recipes/confirm.ejs')
 
 ## Styling (optional)
 
-Here is some styling that will work with the EJS pages you've done so far, but feel free to make your own!
+Here is some styling that will work with the **EJS** pages you've done so far, but feel free to make your own!
 
-Let's make a folder to hold your CSS.
+Let's make a folder to hold your **CSS**.
 
 ```sh
 mkdir public
@@ -3601,7 +3601,7 @@ footer {
 
 ## Recap
 
-In this lesson, you learned how to set up a Node/Express server from scratch, how to create new models using the Mongoose Schema class, and how to write simple functions to perform CRUD operations on your database.  As your Node/Express applications grow in scale and get more complex in structure, these core principles will remain the same.
+In this lesson, you learned how to set up a **Node**/**Express** server from scratch, how to create new models using the **Mongoose** Schema class, and how to write simple functions to perform CRUD operations on your database.  As your **Node**/**Express** applications grow in scale and get more complex in structure, these core principles will remain the same.
 
 This is a BIG lesson, with lots of opportunities to make a mistake. So there is a provided [solution branch](https://github.com/NobodysLackey/mongoose-recipes/tree/solution) to this repository that you can clone down to see the final version.
 
