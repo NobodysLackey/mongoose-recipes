@@ -1,19 +1,19 @@
 {
-  "name": "mongoose-review",
+  "name": "u2_lesson_mongoose_recipes",
+  "author": "Michael Lackey",
+  "license": "MIT",
   "version": "1.0.0",
-  "description": "![Mongoose](./images/mongoose.png)",
-  "main": "index.js",
+  "description": "In this codealong, we will build a full stack MEN application with full CRUD operations and user authentication.",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch server.js",
+    "dev": "node --watch server.js",
     "deploy": "flyctl deploy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "connect-mongo": "^6.0.0",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
